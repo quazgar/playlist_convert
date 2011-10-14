@@ -31,7 +31,7 @@ def convertTrackList(list):
 def parseTrack(track):
     artist = getText(track, "artist")
     title = getText(track, "title")
-    duration = getText(track, "index0")
+    duration = getText(track, "index0")[0:-3]
 
     return (artist, title, duration)
 

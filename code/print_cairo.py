@@ -25,7 +25,7 @@ def print_tracks(tracks, format="svg"):
     ctx.set_source_rgb(0.0, 0.0, 0.0)
     ctx.select_font_face("Sans")
     ctx.set_font_size(10)
-    ctx.move_to(140, 300)
+    ctx.move_to(140, 280)
 
     print_text(ctx, tracks)
 
@@ -44,8 +44,10 @@ def print_track(ctx, track):
     height = ctx.text_extents("X")[3]
     width = ctx.text_extents("m")[2]
 
-    col1 = line_start[0] + 3*width
-    col2 = 420
+    # title/artist column
+    col1 = line_start[0] + 2.5*width
+    # duration column
+    col2 = 440
 
     ctx.show_text(str(short_track[0]))
     ctx.move_to(col1, line_start[1])
@@ -54,11 +56,12 @@ def print_track(ctx, track):
     ctx.move_to(col2, line_start[1])
     ctx.show_text(str(short_track[3]))
 
-    ctx.move_to(line_start[0], line_start[1] + height * 1.5);
+    ctx.move_to(line_start[0], line_start[1] + height * 1.8);
 
 def shorten_track(track):
+    max_length = 30
     short_track = list(track)
     for i in (1, 2):
-        if len(track[i]) > 25:
-            short_track[i] = track[i][0:25] + "..."
+        if len(track[i]) > max_length:
+            short_track[i] = track[i][0:max_length] + "..."
     return short_track
