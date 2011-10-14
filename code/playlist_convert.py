@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""Originally meant to convert Amarok playlists."""
 
 # from random import choice
 # from string import ascii_lowercase
@@ -78,16 +79,19 @@ def applyTracks(tracks):
                              'titles': titles,
                              'times': times})
     print outString
-    
+
+def amarokConvert(inFileName):
+    plXML = xml.dom.minidom.parse(inFileName)
+    for trackList in plXML.getElementsByTagName("trackList"):
+        convertTrackList(trackList)
+    plXML.unlink()
+
 
 def main():
     inFileName = sys.argv[1]
     # print inFileName
     # inFile = open(inFileName)
-    plXML = xml.dom.minidom.parse(inFileName)
-    for trackList in plXML.getElementsByTagName("trackList"):
-        convertTrackList(trackList)
-    plXML.unlink()
+    amarokConvert(inFileName)
     return 0
 
 if __name__ == '__main__':
