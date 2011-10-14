@@ -10,6 +10,7 @@
 from string import Template
 import xml.dom.minidom
 import sys
+import parse_k3b
 
 def convertTrackList(list):
     tracks = []
@@ -91,7 +92,10 @@ def main():
     inFileName = sys.argv[1]
     # print inFileName
     # inFile = open(inFileName)
-    amarokConvert(inFileName)
+    if inFileName.endswith('.k3b'):
+        parse_k3b.parse(inFileName)
+    else:
+        amarokConvert(inFileName)
     return 0
 
 if __name__ == '__main__':
