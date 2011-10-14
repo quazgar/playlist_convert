@@ -12,9 +12,10 @@ def parse(infile_name):
     xml_file = k3b_file.open("maindata.xml")
 
     plXML = xml.dom.minidom.parse(xml_file)
-    for trackList in plXML.getElementsByTagName("contents"):
-        convertTrackList(trackList)
+    track_list = plXML.getElementsByTagName("contents")[0]
+    tracks = convertTrackList(track_list)
     plXML.unlink()
+    return tracks
 
 def convertTrackList(list):
     tracks = []
@@ -24,14 +25,15 @@ def convertTrackList(list):
         (interpret, title, duration) = parseTrack(track)
         tracks.append((iNumber, interpret, title, duration))
 
-    applyTracks(tracks)
+    #applyTracks(tracks)
+    return tracks
 
 def parseTrack(track):
-    creator = getText(track, "creator")
+    artist = getText(track, "artist")
     title = getText(track, "title")
-    duration = getDuration(track)
+    duration = getText(track, "index0")
 
-    return (creator, title, duration)
+    return (artist, title, duration)
 
 def getText(track, name):
     elements = track.getElementsByTagName(name)
@@ -41,16 +43,6 @@ def getText(track, name):
             return k.nodeValue
 
     return ""
-
-def getDuration(track):
-    duration = getText(track, "duration")
-    if duration == "" :
-        return duration
-
-    seconds = int(duration) / 1000
-    minutes = seconds / 60
-    seconds = seconds - minutes*60
-    return ("%d:%02d" % (minutes, seconds))
 
 def applyTracks(tracks):
     indices = ""
@@ -84,3 +76,6 @@ def applyTracks(tracks):
                              'titles': titles,
                              'times': times})
     print outString
+
+# def tracks2csv(tracks):
+    
