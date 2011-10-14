@@ -10,6 +10,7 @@
 import sys
 import parse_k3b
 import parse_amarok
+import print_cairo
 
 def main():
     inFileName = sys.argv[1]
@@ -20,6 +21,8 @@ def main():
         tracks = parse_k3b.parse(inFileName)
     else:
         tracks = parse_amarok.parse(inFileName)
+    #print tracks
+    print_cairo.print_tracks(tracks)
     return 0
 
 if __name__ == '__main__':
